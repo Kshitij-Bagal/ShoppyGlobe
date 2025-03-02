@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="refresh" content="0; url='/'" />
-  </head>
-  <body>
-    <p>Redirecting...</p>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="0;url=/ShoppyGlobe/">
+  <title>Redirecting...</title>
+</head>
+<body>
+  <p>Redirecting to ShoppyGlobe...</p>
+  <script>
+    // Redirect to the correct route using JavaScript
+    const pathname = window.location.pathname.replace('/ShoppyGlobe', '');
+    window.location.replace('/ShoppyGlobe/' + pathname);
+  </script>
+</body>
 </html>
