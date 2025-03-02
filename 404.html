@@ -8,9 +8,18 @@
 <body>
   <p>Redirecting to ShoppyGlobe...</p>
   <script>
-    // Redirect to the correct route using JavaScript
-    const pathname = window.location.pathname.replace('/ShoppyGlobe', '');
-    window.location.replace('/ShoppyGlobe/' + pathname);
+    // Get the current pathname
+    const pathname = window.location.pathname;
+
+    // Remove extra slashes and redirect properly
+    const cleanedPath = pathname.replace(/\/+/g, '/').replace('/ShoppyGlobe/', '');
+
+    // Redirect only if there's a path to preserve
+    if (cleanedPath) {
+      window.location.replace('/ShoppyGlobe/' + cleanedPath);
+    } else {
+      window.location.replace('/ShoppyGlobe/');
+    }
   </script>
 </body>
 </html>
