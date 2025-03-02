@@ -1,0 +1,95 @@
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #fff;
+}
+body {
+  font-family: Arial, sans-serif;
+  
+  background-color: #000000;
+  color: #000000;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+header {
+  background: #333;
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+
+nav a:hover {
+  background: #555;
+}
+
+main {
+  padding: 2rem;
+}
+
+footer {
+  background: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+button {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #555;
+}
+
+/* src/App.css */
+
+.app-container {
+  max-width: 1200px; /* Set your preferred width */
+  margin: 0 auto; /* Center the content */
+  padding: 20px;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+
+@media (max-width: 1300px) {
+  .app-container {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    max-width: 100%; /* Full width on smaller screens */
+    padding: 10px;
+  }
+}
