@@ -1,62 +1,67 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../redux/cartSlice';
+import { addToCartServer } from '../redux/cartSlice';
 import ReviewCard from '../components/ReviewCard';
 import '../styles/ProductDetail.css';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const ProductDetail = () => {
-  const { productName } = useParams();
+  const { ProductId } = useParams(); // Get the product title from URL params
   const [product, setProduct] = useState(null);
-  const [error, setError] = useState(null);
-  const [showDetails, setShowDetails] = useState(false); // Toggle state
+  const [loading, setLoading] = useState(true); // To manage loading state
+  const [error, setError] = useState(null); // To manage error state
+  const [showDetails, setShowDetails] = useState(false);
   const dispatch = useDispatch();
 
+
   useEffect(() => {
-    if (productName) {
-      const decodedName = decodeURIComponent(productName);
-      fetch('https://dummyjson.com/products')
-        .then((res) => res.json())
-        .then((data) => {
-          const matchedProduct = data.products.find(
-            (p) => slugify(p.title) === slugify(decodedName)
-          );
-          if (matchedProduct) {
-            setProduct(matchedProduct);
-          } else {
-            setError('Product not found');
-          }
-        })
-        .catch((err) => setError(err.message));
+    // Fetch product details by title
+    const fetchProductDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/api/products/${ProductId}`);
+        if (!response.ok) {
+          throw new Error('Product not found');
+        }
+        const data = await response.json();
+        setProduct(data); // Set the fetched product data
+        if (!data || Object.keys(data).length === 0) {
+          throw new Error('Invalid product data');
+        }
+        
+      } catch (err) {
+        console.error('Error fetching product details:', err);
+        setError(err.message); // Set error message
+      } finally {
+        setLoading(false); // Set loading to false after the fetch
+      }
+    };
+
+    if (ProductId) {
+      fetchProductDetails();
     }
-  }, [productName]);
+  }, [ProductId]);
 
-  const slugify = (text) =>
-    text
-      .toLowerCase()
-      .trim()
-      .replace(/%20/g, '-')
-      .replace(/\s+/g, '-')
-      .replace(/[^\w-]+/g, '');
-
-  if (error) return <p>{error}</p>;
-  if (!product) return <p>Loading...</p>;
+  // Handle loading, error, and product not found cases
+  if (loading) return <div className="spinner">Its Loading ........</div>;
+  if (error) return <p style={{ color: 'red' }}>{error}</p>;
+  if (!product) return <p>Product not found</p>; // Handle when product is not found
 
   return (
-    <>
-    
     <div className="product-detail">
       <div className="product-data">
-        <Link to='/ShoppyGlobe/browse'>
-        <button className='back_btn'>X</button></Link>
-        <img src={product.thumbnail} alt={product.title} /> 
-        <div className="product-info">   
+        <Link to='/browse'>
+          <button className='back_btn'>X</button>
+        </Link>
+        <img src={product.thumbnail} alt={product.title} />
+        <div className="product-info">
           <h2>{product.title}</h2>
           <p>{product.description}</p>
           <p>
             <strong>Price:</strong> ${product.price}{' '}
-            <span style={{ color: 'red' }}>({product.discountPercentage}% off)</span>
+            <span className="discount">
+              ({product.discountPercentage}% off → ${product.price - (product.price * product.discountPercentage) / 100})
+            </span>
           </p>
           <p>
             <strong>Availability:</strong>{' '}
@@ -74,43 +79,36 @@ const ProductDetail = () => {
           <p>
             <strong>Stock:</strong> {product.stock} available
           </p>
-        </div> 
+        </div>
       </div>
-      <button className='add-to-cart-btn ' onClick={() => dispatch(addToCart(product))}>
-        Add to Cart
-      </button>
-
+      <button   className='add-to-cart-btn' onClick={() => dispatch(addToCartServer(product))} disabled={product.stock === 0}>  {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}</button>
       <button className='add-btn' onClick={() => setShowDetails((prev) => !prev)}>
         {showDetails ? 'Hide Additional Details' : 'Show Additional Details'}
       </button>
-
-      {showDetails && (
-        <div className="additional-details">
-          <h3>Additional Details</h3>
-          <p>
-            <strong>Dimensions:</strong>{' '}
-            {product.dimensions
-              ? `${product.dimensions.width} x ${product.dimensions.height} x ${product.dimensions.depth}`
-              : 'Not specified'}
-          </p>
-          <p>
-            <strong>Shipping Information:</strong>{' '}
-            {product.shippingInformation || 'Not provided'}
-          </p>
-          <p>
-            <strong>Return Policy:</strong>{' '}
-            {product.returnPolicy || 'Not provided'}
-          </p>
-          <p>
-            <strong>Warranty Information:</strong>{' '}
-            {product.warrantyInformation || 'Not provided'}
-          </p>
-        </div>
-      )}
-
-      <ReviewCard reviews={product.reviews} />
+      <div className={`additional-details ${showDetails ? 'show' : ''}`}>
+        <h3>Additional Details</h3>
+        <p>
+          <strong>Dimensions:</strong>{' '}
+          {product.dimensions
+            ? `${product.dimensions.width} x ${product.dimensions.height} x ${product.dimensions.depth}`
+            : 'Not specified'}
+        </p>
+        <p>
+          <strong>Shipping Information:</strong>{' '}
+          {product.shippingInformation || 'Not provided'}
+        </p>
+        <p>
+          <strong>Return Policy:</strong>{' '}
+          {product.returnPolicy || 'Not provided'}
+        </p>
+        <p>
+          <strong>Warranty Information:</strong>{' '}
+          {product.warrantyInformation || 'Not provided'}
+        </p>
+      </div>
+      <ReviewCard reviews={product.reviews?.length ? product.reviews : []} />
+        {product.reviews?.length === 0 && <p>No reviews yet. Be the first to review!</p>}
     </div>
-    </>
   );
 };
 

@@ -1,10 +1,4 @@
 /* General Styles */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f8f9fa;
-}
 
 /* Product Detail Page */
 .product-detail {
@@ -81,9 +75,19 @@ body {
   border-radius: 15px;
   border: 1px solid #ddd;
   padding: 20px;
-  text-align: left;
   text-align: center;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
 }
+
+.additional-details.show {
+  max-height: 500px; /* Set an appropriate height */
+  opacity: 1;
+  overflow: visible;
+}
+
 
 .back_btn{
   width: 50px;

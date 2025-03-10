@@ -6,12 +6,12 @@ import '../styles/ProductList.css';
 const ProductList = ({ searchQuery, categoryFilter, sortOption }) => {
   const { products, loading, error } = useFetchProducts();
   const [filteredProducts, setFilteredProducts] = useState([]);
-
+    console.log(products);
   useEffect(() => {
-    // Ensure products is always an array
     let updatedProducts = Array.isArray(products) ? [...products] : [];
 
-    // Search
+
+    // Search filter
     if (searchQuery) {
       updatedProducts = updatedProducts.filter((product) =>
         product.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -25,7 +25,7 @@ const ProductList = ({ searchQuery, categoryFilter, sortOption }) => {
       );
     }
 
-    // Sorting
+    // Sorting logic
     switch (sortOption) {
       case 'name':
         updatedProducts.sort((a, b) => a.title.localeCompare(b.title));
@@ -58,8 +58,11 @@ const ProductList = ({ searchQuery, categoryFilter, sortOption }) => {
   return (
     <div className="product-list">
       {filteredProducts.length > 0 ? (
-        filteredProducts.map((product) => (
-          <ProductItem key={product.id} product={product} />
+        filteredProducts.map((product, index) => (
+          <ProductItem 
+            key={product.id || `${product.title}-${index}`} // Unique key
+            product={product} 
+          />
         ))
       ) : (
         <p>No products found.</p>

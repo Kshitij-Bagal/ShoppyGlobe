@@ -1,3 +1,8 @@
+
+
+/* Marquee Scrolling for Category List */
+
+
 /* Home Page */
 .home {
   text-align: center;
@@ -49,7 +54,8 @@
 
 /* Styling the featured product image */
 .ad-image {
-  width: 100%;
+  width: 400px;
+  height: 400px;
   max-width: 400px;
   height: auto;
   border-radius: 10px;
@@ -107,29 +113,24 @@
   transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
-
-/* Category List */
-.category-list {
-  overflow: hidden;
-  white-space: nowrap;
-  padding: 10px 0;
-  position: relative;
+.category-list-marquee {
+  margin-top: 20px;
   background: #f1f2f6;
+  padding: 10px 0;
   border-radius: 8px;
+  overflow: hidden;
 }
 
-/* Styling the scrolling category list */
-.category-list ul {
+.category-marquee ul {
   display: inline-flex;
   min-width: 100%;
-  animation: marquee 20s linear infinite;
+  animation: marquee 15s linear infinite;
   gap: 20px;
   padding: 0;
   margin: 0;
 }
 
-/* Styling individual category items */
-.category-list ul li {
+.category-marquee ul li {
   list-style: none;
   padding: 10px 15px;
   width: 200px;
@@ -137,36 +138,46 @@
   border-radius: 8px;
   cursor: pointer;
   text-align: center;
-  flex-shrink: 0;
   background: #fff;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* Highlighting categories on hover */
-.category-list ul li:hover {
+.category-marquee ul li:hover {
   background-color: #007bff;
   color: #fff;
   transform: scale(1.05);
 }
 
-/* Animations */
+/* Marquee Animation */
 @keyframes marquee {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-70%);
   }
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+/* Welcome Message */
+.welcome-message {
+  text-align: center;
+  padding: 20px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
 }
+
+.welcome-message h1 {
+  font-size: 2rem;
+  color: #007bff;
+}
+
+.welcome-message p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
 
 /* Responsive Design */
 
@@ -230,5 +241,6 @@
 
   .ad-image {
     max-width: 250px;
+    height: 250px;
   }
 }

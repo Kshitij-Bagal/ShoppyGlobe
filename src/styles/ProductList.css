@@ -32,7 +32,7 @@ gap: 20px;
   .product-item img {
     width: 200px;
     height: 200px;
-    object-fit:cover;
+    object-fit:fill;
     border-bottom: 2px solid #007bff;
     object-position: center; 
     /* background-color: transparent   */
@@ -59,13 +59,14 @@ gap: 20px;
   
   .availability {
     position: relative;
-    top: 10px;
-    right: -70px;
+    top: 15px;
+    right: -85px;
     color: #000000;
     background-color: rgb(253, 255, 147);
     padding: 5px 10px ;
     border-radius:25px;
     border: 1px solid rgba(255, 162, 13, 0.863);
+    z-index: 5;
   }
 
   .product-item .stock {

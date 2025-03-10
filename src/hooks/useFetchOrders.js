@@ -1,30 +1,58 @@
 import { useState, useEffect } from 'react';
 
-const useFetchOrders = (userId) => {
-  const [orders, setOrders] = useState(null);
+const useFetchOrders = (userId, apiBaseUrl = '/api') => {
+  const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fallbackUserId = 1;
-
   useEffect(() => {
-    const idToFetch = userId || fallbackUserId;
+    if (!userId) return;
 
-    fetch(`https://dummyjson.com/carts/${idToFetch}`)
-      .then((res) => {
-        if (!res.ok) throw new Error('Orders not found');
-        return res.json();
-      })
-      .then((data) => {
-        console.log('Fetched Orders:', data);
-        setOrders(data); // No array wrapping — store the object directly
+    const token = localStorage.getItem('token'); // Fetch token from localStorage
+    if (!token) {
+      setError('Authorization token not found');
+      setLoading(false);
+      return;
+    }
+
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const fetchOrders = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await fetch(`${apiBaseUrl}/orders/${userId}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          signal,
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed to fetch orders');
+        }
+
+        setOrders(data.orders || []);
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('Error fetching orders:', err);
+          setError(err.message);
+        }
+      } finally {
         setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, [userId]);
+      }
+    };
+
+    fetchOrders();
+
+    return () => controller.abort();
+  }, [userId, apiBaseUrl]);
 
   return { orders, loading, error };
 };

@@ -1,28 +1,25 @@
 import { useState, useEffect } from 'react';
 
 const useFetchProducts = () => {
-  const [products, setProducts] = useState([]); // ✅ Product state
-  const [categories, setCategories] = useState([]); // ✅ Category state
-  const [loading, setLoading] = useState(true); // ✅ Loading state
-  const [error, setError] = useState(null); // ✅ Error state
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('https://dummyjson.com/products');
+        const response = await fetch('http://localhost:8000/api/products');
         if (!response.ok) throw new Error('Failed to fetch products');
-        
         const data = await response.json();
-        if (data && Array.isArray(data.products)) {
-          setProducts(data.products); // ✅ Set products
-          
-          // Extract unique categories
-          const uniqueCategories = [...new Set(data.products.map((product) => product.category))];
-          setCategories(uniqueCategories);
-        } else {
-          setProducts([]);
-          setCategories([]);
-        }
+        console.log('Fetched Products:', data.products);
+        setProducts(data);
+
+        // Extract unique categories from products
+        const uniqueCategories = [
+          ...new Set(data.map((product) => product.category)),
+        ];
+        setCategories(uniqueCategories);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -37,5 +34,3 @@ const useFetchProducts = () => {
 };
 
 export default useFetchProducts;
-
-// https://dummyjson.com/products

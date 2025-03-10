@@ -1,9 +1,14 @@
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../redux/cartSlice';
+import { addToCartServer  } from '../redux/cartSlice';
 import { Link } from 'react-router-dom';
 
 const ProductItem = ({ product }) => {
   const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    console.log('Product to add to cart:', product);  // Log the product to see its structure
+    dispatch(addToCartServer(product));
+  };
 
   return (
     <div className="product-item">
@@ -12,11 +17,16 @@ const ProductItem = ({ product }) => {
         <img src={product.thumbnail} alt={product.title} />
         <h3>{product.title}</h3>
         <p>Price: ${product.price}</p>
-        <Link to={`/ShoppyGlobe/product/${product.title}`}>View Details</Link>
-        <button onClick={() => dispatch(addToCart(product))}>Add to Cart</button>
+        <Link to={`/products/${product._id}`}>
+          View Details
+        </Link>
+    <button onClick={handleAddToCart} disabled={product.availabilityStatus === 'Out of stock'}>
+      Add to Cart
+    </button>
       </div>
     </div>
   );
 };
+
 
 export default ProductItem;

@@ -9,11 +9,14 @@ const Cart = () => {
     <div className="cart">
       <h2>Your Cart</h2>
       {cartItems.length === 0 ? (
-        <p>Your cart is empty. <Link to="/ShoppyGlobe/products">Shop now!</Link></p>
+        <p>
+          Your cart is empty. <Link to="/products">Shop now!</Link>
+        </p>
       ) : (
         <div className="cart-items">
           {cartItems.map((item) => (
-            <CartItem key={item.id} item={item} />
+            // Use productId or the actual unique identifier for each item here
+            <CartItem key={item.productId || item.id} item={item} />
           ))}
         </div>
       )}

@@ -18,13 +18,13 @@ const CheckOut = () => {
     <div className="checkout-page">
       <h2>Checkout</h2>
       {cart.length === 0 ? (
-        <p>No items in the cart. <Link to="/ShoppyGlobe/browse">Add products!</Link></p>
+        <p>No items in the cart. <Link to="/browse">Add products!</Link></p>
       ) : (
         <div className="checkout-summary">
           <h3>Order Summary</h3>
           <ul>
             {cart.map((item) => (
-              <li key={item.id}>
+              <li key={item._id}>
                 {item.title} x {item.quantity} - ${item.price * item.quantity}
               </li>
             ))}

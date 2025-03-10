@@ -12,35 +12,44 @@ const OrdersPage = () => {
   if (loading) return <p>Loading order history...</p>;
   if (error) return <p>{error}</p>;
 
-  // Handle case where no orders are found
-  if (!orders || !orders.products || orders.products.length === 0) {
+  // Handle case where no orders are found, show a user-friendly message
+  if (orders.length === 0) {
     return <p>No past orders found.</p>;
   }
 
   return (
     <div className="orders-page">
       <h2>Order History</h2>
-      <div className="order-card">
-        <h3>Order ID: {orders.id}</h3>
-        <p>
-          <strong>Total Price:</strong> ${orders.total}
-        </p>
-        <p>
-          <strong>Total Items:</strong> {orders.totalProducts}
-        </p>
-        <div className="order-items">
-          {orders.products.map((product) => (
-            <div key={product.id} className="order-item">
-              <img src={product.thumbnail} alt={product.title} />
-              <div>
-                <p>{product.title}</p>
-                <p>Quantity: {product.quantity}</p>
-                <p>Price: ${product.price}</p>
-              </div>
-            </div>
-          ))}
+      {orders.map((order) => (
+        <div key={order._id} className="order-card">
+          <h3>Order ID: {order._id}</h3>
+          <p>
+            <strong>Total Price:</strong> ${order.total}
+          </p>
+          <div className="order-items">
+            {/* Check if cart exists and is an array */}
+            {Array.isArray(order.cart) && order.cart.length > 0 ? (
+              order.cart.map((product) => (
+                <div key={product._id} className="order-item">
+                  {/* Assuming productId is a reference to the product document */}
+                  {/* Replace with actual image source or thumbnail if available */}
+                  <img 
+                  src={product.thumbnail}
+                    alt={`${product.title}`} 
+                  />
+                  <div>
+                    <p>{product.title}</p>
+                    <p>Quantity: {product.quantity}</p>
+                    <p>Price: ${product.price}</p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No products in this order.</p>
+            )}
+          </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 };

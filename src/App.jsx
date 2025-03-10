@@ -1,10 +1,15 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import React, { lazy, Suspense } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { lazy, Suspense, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Header from './components/Header';
-import './App.css';
 import ScrollToTop from './components/ScrollToTop';
+import ProtectedRoute from './components/ProtectedRoute'; // Wrapper to handle protected routes
+import AdminRoute from './components/AdminRoute'; // Admin protection wrapper
+import { fetchCart } from './redux/cartSlice'; // Fetch cart data on load
+import { setUserToken } from './redux/userSlice.js';
+import './App.css';
 
-// Lazy loading components
+// Lazy loading components for better performance
 const Home = lazy(() => import('./pages/Home'));
 const BrowseProduct = lazy(() => import('./pages/BrowseProduct'));
 const ProductDetail = lazy(() => import('./pages/ProductDetail'));
@@ -12,35 +17,102 @@ const CheckOut = lazy(() => import('./pages/CheckOut'));
 const CartPage = lazy(() => import('./pages/CartPage'));
 const PaymentPortal = lazy(() => import('./pages/PaymentPortal'));
 const NotFound = lazy(() => import('./pages/NotFound'));
-const Profile = lazy(() => import('./pages/UserProfile'));
-const Orders = lazy(() => import('./pages/OrdersPage'));
+const UserProfile = lazy(() => import('./pages/UserProfile'));
+const OrdersPage = lazy(() => import('./pages/OrdersPage'));
 const LoginSignup = lazy(() => import('./pages/LoginSignup'));
 
-// Helper function to check authentication
-const getUserId = () => localStorage.getItem('userId');
+// Admin Pages (Lazy-loaded)
+const AdminProduct = lazy(() => import('./pages/AdminProduct'));
+const AdminUsers = lazy(() => import('./pages/AdminUsers'));
 
 function App() {
+  const dispatch = useDispatch();
+  const token = localStorage.getItem('token');
+
+  if (token) {
+    console.log("Current Token:", token);
+  } else {
+    console.log("No token found");
+  }
+
+  // Fetch cart data on app load (if logged in)
+  useEffect(() => {
+    if (token) {
+      dispatch(setUserToken(token));
+      dispatch(fetchCart());
+    }
+  }, [dispatch, token]);
+
   return (
-    <BrowserRouter>
-    <ScrollToTop />
+    <BrowserRouter basename="/ShoppyGlobe">
+      <ScrollToTop />
       <Header />
       <div className="app-container">
         <Suspense fallback={<div className="loading-screen">Loading...</div>}>
           <main className="main-content">
             <Routes>
-              <Route path="/ShoppyGlobe/" element={<Home />} />
-              <Route path="/ShoppyGlobe/browse" element={<BrowseProduct />} />
-              <Route path="/ShoppyGlobe/product/:productName" element={<ProductDetail />} />
-              <Route path="/ShoppyGlobe/checkout" element={getUserId() ? <CheckOut /> : <Navigate to="/ShoppyGlobe/login" />} />
-              <Route path="/ShoppyGlobe/cartpage" element={<CartPage />} />
-              <Route path="/ShoppyGlobe/paymentportal" element={getUserId() ? <PaymentPortal /> : <Navigate to="/ShoppyGlobe/login" />} />
-              <Route path="/ShoppyGlobe/profile" element={getUserId() ? <Profile /> : <Navigate to="/ShoppyGlobe/login" />} />
-              <Route path="/ShoppyGlobe/orders" element={getUserId() ? <Orders /> : <Navigate to="/ShoppyGlobe/login" />} />
-              <Route path="/ShoppyGlobe/login" element={<LoginSignup />} />
+              {/* Public Routes */}
+              <Route path="/" element={<Home />} />
+              <Route path="/browse" element={<BrowseProduct />} />
+              <Route path="/products/:ProductId" element={<ProductDetail />} />
+              <Route path="/cartpage" element={<CartPage />} />
+              <Route path="/login" element={<LoginSignup />} />
+
+              {/* Protected Routes */}
+              <Route
+                path="/checkout"
+                element={
+                  <ProtectedRoute>
+                    <CheckOut />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/paymentportal"
+                element={
+                  <ProtectedRoute>
+                    <PaymentPortal />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <UserProfile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/orders"
+                element={
+                  <ProtectedRoute>
+                    <OrdersPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Admin Routes */}
+              <Route
+                path="/adminproducts"
+                element={
+                  <AdminRoute>
+                    <AdminProduct />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/adminusers"
+                element={
+                  <AdminRoute>
+                    <AdminUsers />
+                  </AdminRoute>
+                }
+              />
+
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
-
         </Suspense>
       </div>
     </BrowserRouter>
