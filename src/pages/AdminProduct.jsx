@@ -27,7 +27,7 @@ const AdminProduct = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/products', {
+        const response = await fetch('https://shoppyglobe-server.onrender.com/api/products', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ const AdminProduct = () => {
   const handleAddProduct = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8000/api/products', {
+      const response = await fetch('https://shoppyglobe-server.onrender.com/api/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ const AdminProduct = () => {
 
   const handleDeleteProduct = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/products/${id}`, {
+      const response = await fetch(`https://shoppyglobe-server.onrender.com/api/products/${id}`, {
         method: 'DELETE',
       });
       if (response.ok) {
@@ -127,7 +127,7 @@ const AdminProduct = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:8000/api/products/${editingProduct._id}`,
+        `https://shoppyglobe-server.onrender.com/api/products/${editingProduct._id}`,
         {
           method: 'PUT',
           headers: {

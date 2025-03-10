@@ -37,7 +37,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/users/profile', {
+        const response = await fetch('https://shoppyglobe-server.onrender.com/api/users/profile', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -109,7 +109,7 @@ const Profile = () => {
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8000/api/users/profile', {
+      const response = await fetch('https://shoppyglobe-server.onrender.com/api/users/profile', {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,

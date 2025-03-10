@@ -7,7 +7,7 @@ export const fetchUserData = createAsyncThunk('user/fetchUserData', async (_, { 
     const token = localStorage.getItem('token');
     if (!token) throw new Error('No token found. Please log in.');
 
-    const res = await axios.get('http://localhost:8000/api/users/profile', {
+    const res = await axios.get('https://shoppyglobe-server.onrender.com/api/users/profile', {
       headers: { Authorization: `Bearer ${token}` },
     });
 

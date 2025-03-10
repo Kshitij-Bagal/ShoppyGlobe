@@ -9,10 +9,9 @@ const useFetchProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/products');
+        const response = await fetch('https://shoppyglobe-server.onrender.com/api/products');
         if (!response.ok) throw new Error('Failed to fetch products');
         const data = await response.json();
-        console.log('Fetched Products:', data.products);
         setProducts(data);
 
         // Extract unique categories from products

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:8000/api/users'; // Replace with your API URL
+const apiUrl = 'https://shoppyglobe-server.onrender.com/api/users'; // Replace with your API URL
 
 // Login User
 // Login User

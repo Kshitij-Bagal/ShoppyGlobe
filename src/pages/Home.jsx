@@ -15,7 +15,7 @@ const Home = () => {
   useEffect(() => {
     const fetchProductsAndCategories = async () => {
       try {
-        const productResponse = await fetch('http://localhost:8000/api/products');
+        const productResponse = await fetch('https://shoppyglobe-server.onrender.com/api/products');
         const productData = await productResponse.json();
 
         if (productData.products && productData.products.length > 0) {

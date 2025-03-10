@@ -19,7 +19,7 @@ const ProductDetail = () => {
     // Fetch product details by title
     const fetchProductDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/products/${ProductId}`);
+        const response = await fetch(`https://shoppyglobe-server.onrender.com/api/products/${ProductId}`);
         if (!response.ok) {
           throw new Error('Product not found');
         }

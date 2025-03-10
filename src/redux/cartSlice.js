@@ -8,7 +8,7 @@ export const fetchCart = createAsyncThunk('cart/fetchCart', async (_, { rejectWi
     const token = localStorage.getItem('token');
     if (!token) throw new Error('No token found. Please log in.');
 
-    const response = await axios.get('http://localhost:8000/api/cart', {
+    const response = await axios.get('https://shoppyglobe-server.onrender.com/api/cart', {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data.items;
@@ -31,7 +31,7 @@ export const addToCartServer = createAsyncThunk('cart/addToCartServer', async (i
     };
 
     const response = await axios.post(
-      'http://localhost:8000/api/cart',
+      'https://shoppyglobe-server.onrender.com/api/cart',
       payload,
       { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' } }
     );
@@ -49,7 +49,7 @@ export const updateCartQuantity = createAsyncThunk(
       try {
           const token = localStorage.getItem('token');
           const response = await axios.put(
-              'http://localhost:8000/api/cart', 
+              'https://shoppyglobe-server.onrender.com/api/cart', 
               { productId: id, quantity },
               {
                   headers: { 
@@ -72,7 +72,7 @@ export const removeFromCartServer = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete('http://localhost:8000/api/cart', {
+      await axios.delete('https://shoppyglobe-server.onrender.com/api/cart', {
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
         data: { productId: id }, // Pass productId in the body
       });

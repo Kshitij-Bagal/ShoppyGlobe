@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useFetchOrders = (userId, apiBaseUrl = '/api') => {
+const useFetchOrders = (userId, apiBaseUrl = 'https://shoppyglobe-server.onrender.com/api') => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

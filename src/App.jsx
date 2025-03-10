@@ -29,11 +29,6 @@ function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
 
-  if (token) {
-    console.log("Current Token:", token);
-  } else {
-    console.log("No token found");
-  }
 
   // Fetch cart data on app load (if logged in)
   useEffect(() => {

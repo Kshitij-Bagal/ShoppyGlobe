@@ -10,7 +10,7 @@ const AdminUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/users/', {
+        const response = await fetch('https://shoppyglobe-server.onrender.com/api/users/', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ const AdminUsers = () => {
 
     const fetchCurrentUser = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/users/profile', {
+        const response = await fetch('https://shoppyglobe-server.onrender.com/api/users/profile', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -55,7 +55,7 @@ const AdminUsers = () => {
 
   const handleDeleteUser = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/users/${id}`, {
+      const response = await fetch(`https://shoppyglobe-server.onrender.com/api/users/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -87,7 +87,7 @@ const AdminUsers = () => {
 
   const updateRole = async (id, newRole) => {
     try {
-        const response = await fetch(`http://localhost:8000/api/users/${id}/role`, {
+        const response = await fetch(`https://shoppyglobe-server.onrender.com/api/users/${id}/role`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

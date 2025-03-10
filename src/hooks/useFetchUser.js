@@ -15,8 +15,7 @@ const useFetchUser = () => {
     }
     const fetchUser = async () => {
       try {
-        console.log('Fetching user data...');
-        const response = await fetch('http://localhost:8000/api/users/profile', {
+        const response = await fetch('https://shoppyglobe-server.onrender.com/api/users/profile', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`, // Use token for authorization
@@ -28,7 +27,6 @@ const useFetchUser = () => {
         }
     
         const data = await response.json();
-        console.log('User data:', data); // Log the data to check if it's correct
         setUser(data);
       } catch (err) {
         console.error('Error fetching user data:', err);

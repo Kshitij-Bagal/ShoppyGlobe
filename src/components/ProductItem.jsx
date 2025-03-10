@@ -6,7 +6,6 @@ const ProductItem = ({ product }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    console.log('Product to add to cart:', product);  // Log the product to see its structure
     dispatch(addToCartServer(product));
   };
 

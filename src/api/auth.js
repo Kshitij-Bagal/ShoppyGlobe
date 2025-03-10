@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = '/api/users'; // Assuming your backend routes start with /api/users
+const API_URL = 'https://shoppyglobe-server.onrender.com/api/users'; // Assuming your backend routes start with /api/users
 
 // Login API call
 export const loginUser = async (userData) => {

@@ -6,7 +6,6 @@ import '../styles/ProductList.css';
 const ProductList = ({ searchQuery, categoryFilter, sortOption }) => {
   const { products, loading, error } = useFetchProducts();
   const [filteredProducts, setFilteredProducts] = useState([]);
-    console.log(products);
   useEffect(() => {
     let updatedProducts = Array.isArray(products) ? [...products] : [];
 
