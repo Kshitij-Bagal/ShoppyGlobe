@@ -49,6 +49,27 @@ const PaymentPortal = () => {
     }
   }, [dispatch, user]);
 
+  const clearUserCart = async () => {
+    try {
+      const response = await fetch('https://shoppyglobe-server.onrender.com/api/cart/clear', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+  
+      if (response.ok) {
+        console.log('Cart cleared successfully');
+        dispatch(clearCart()); // Clear the cart in Redux state as well
+      } else {
+        console.error('Failed to clear cart:', await response.json());
+      }
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+    }
+  };
+  
   const createOrder = async (userId, cart, shippingAddress, totalPrice) => {
     try {
       const orderData = {
@@ -65,7 +86,7 @@ const PaymentPortal = () => {
         paymentStatus: 'success',
       };
 
-      const response = await fetch('/api/orders', {
+      const response = await fetch('https://shoppyglobe-server.onrender.com/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +98,8 @@ const PaymentPortal = () => {
       const data = await response.json();
 
       if (response.status === 201) {
-        dispatch(clearCart()); // Clear the cart after successful order
+        console.log('Order created successfully:', data);
+        await clearUserCart(); // 🧹 Clear the cart in the database!
       } else {
         console.error('Error:', data);
       }

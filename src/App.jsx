@@ -39,7 +39,7 @@ function App() {
   }, [dispatch, token]);
 
   return (
-    <BrowserRouter basename="/ShoppyGlobe">
+    <BrowserRouter basename="/ShoppyGlobe/">
       <ScrollToTop />
       <Header />
       <div className="app-container">

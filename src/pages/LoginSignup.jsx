@@ -18,6 +18,7 @@ const LoginSignup = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (email && password) {
+      // console.log({ email, password });
       try {
         const { user, token } = await loginUser({ email, password });
         if (user && token) {

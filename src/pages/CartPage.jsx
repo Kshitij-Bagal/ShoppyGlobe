@@ -30,7 +30,6 @@ const CartPage = () => {
       // Assuming you have an order placement function in your app, you could place the order here
       // After successful order placement, clear the cart
       setOrderPlaced(true);
-      dispatch(clearCart());  // Clear the cart in Redux store
     } catch (err) {
       console.error('Order placement failed:', err);
     }
