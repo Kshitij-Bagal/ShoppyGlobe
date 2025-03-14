@@ -60,7 +60,7 @@ const PaymentPortal = () => {
       });
   
       if (response.ok) {
-        console.log('Cart cleared successfully');
+        // console.log('Cart cleared successfully');
         dispatch(clearCart()); // Clear the cart in Redux state as well
       } else {
         console.error('Failed to clear cart:', await response.json());
@@ -98,7 +98,7 @@ const PaymentPortal = () => {
       const data = await response.json();
 
       if (response.status === 201) {
-        console.log('Order created successfully:', data);
+        // console.log('Order created successfully:', data);
         await clearUserCart(); // 🧹 Clear the cart in the database!
       } else {
         console.error('Error:', data);
@@ -146,6 +146,7 @@ const PaymentPortal = () => {
   };
 
   return (
+    <>
     <div className="payment-portal">
       <div className="product-summary">
         <h2>Demo Payment Portal</h2>
@@ -206,6 +207,7 @@ const PaymentPortal = () => {
             <label>CVV</label><br />
             <input
               type="text"
+              id='cvv'
               name="cvv"
               placeholder="123"
               maxLength="3"
@@ -217,7 +219,7 @@ const PaymentPortal = () => {
             {formErrors.cvv && <small className="error-message">CVV must be 3 digits</small>}
           </div>
         </div>
-
+          <div className="address">
         <h3>Shipping Address</h3>
         <label>Street</label>
         <input
@@ -262,21 +264,22 @@ const PaymentPortal = () => {
           className={formErrors.postalCode ? 'error' : ''}
         />
         {formErrors.postalCode && <small className="error-message">Postal code is required</small>}
-
+</div>
         <button type="submit">Pay Now</button>
-      </form>
-
-      {paymentStatus === 'success' && (
-        <div className="payment-success">
-          ✅ Payment Successful! Thank you for your purchase.
-        </div>
-      )}
-      {paymentStatus === 'failure' && (
-        <div className="payment-failure">
-          ❌ Payment Failed! Please check your card details and try again.
-        </div>
-      )}
-    </div>
+      </form></div>
+      <div className='payment-status'>
+        {paymentStatus === 'success' && (
+          <div className="success">
+           <p>. ✅ Payment Successful! Thank you for your purchase.</p>
+          </div>
+        )}
+        {paymentStatus === 'failure' && (
+          <div className="failure">
+            <p>❌ Payment Failed! Please check your card details and try again.</p>
+          </div>
+        )}
+      
+    </div></>
   );
 };
 

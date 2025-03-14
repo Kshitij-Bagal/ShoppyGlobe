@@ -47,11 +47,11 @@ function App() {
           <main className="main-content">
             <Routes>
               {/* Public Routes */}
-              <Route path="/" element={<Home />} />
-              <Route path="/browse" element={<BrowseProduct />} />
-              <Route path="/products/:ProductId" element={<ProductDetail />} />
-              <Route path="/cartpage" element={<CartPage />} />
-              <Route path="/login" element={<LoginSignup />} />
+              <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+              <Route path="/browse" element={<ProtectedRoute><BrowseProduct /></ProtectedRoute>} />
+              <Route path="/products/:ProductId" element={<ProtectedRoute><ProductDetail /></ProtectedRoute>} />
+              <Route path="/cartpage" element={<ProtectedRoute><CartPage /></ProtectedRoute>} />
+              <Route path="/login" element={<ProtectedRoute><LoginSignup /></ProtectedRoute>} />
 
               {/* Protected Routes */}
               <Route

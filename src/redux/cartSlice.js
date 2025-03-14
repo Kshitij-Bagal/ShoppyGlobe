@@ -4,18 +4,32 @@ import axios from 'axios';
 
 // Fetch cart items from server
 export const fetchCart = createAsyncThunk('cart/fetchCart', async (_, { rejectWithValue }) => {
-  try {
+     if (!token) {
+      // Custom error message
+      alert('Please log in to continue shopping');
+      return rejectWithValue('You must log in to access your cart.');
+    }
+    if (token) {
+    try {
     const token = localStorage.getItem('token');
-    if (!token) throw new Error('No token found. Please log in.');
+ 
 
     const response = await axios.get('https://shoppyglobe-server.onrender.com/api/cart', {
       headers: { Authorization: `Bearer ${token}` },
     });
-    return response.data.items;
+
+    return response.data.items;  // Only return after successful API response
   } catch (error) {
-    return rejectWithValue(error.response?.data?.message || 'Failed to fetch cart');
-  }
+    if (error.response && error.response.status === 401) {
+      console.error('Custom Error: Unauthorized access. Please log in to view your cart.');
+    }
+    alert('Please log in to continue shopping');    
+    return rejectWithValue(error.response?.data?.message || 'Error: Failed to fetch your cart. Please try again later.');
+  }}
 });
+
+
+
 
 // Add item to cart (server & state)
 export const addToCartServer = createAsyncThunk('cart/addToCartServer', async (item, { rejectWithValue }) => {
@@ -37,7 +51,8 @@ export const addToCartServer = createAsyncThunk('cart/addToCartServer', async (i
     );
     return response.data;
   } catch (error) {
-    console.error('Add to cart failed:', error.response?.data);
+    // Handle error gracefully and show an alert
+    alert('Please log in to add items to your cart');
     return rejectWithValue(error.response?.data?.message || 'Failed to add item to cart');
   }
 });
@@ -46,25 +61,26 @@ export const addToCartServer = createAsyncThunk('cart/addToCartServer', async (i
 export const updateCartQuantity = createAsyncThunk(
   'cart/updateCartQuantity',
   async ({ id, quantity }, { rejectWithValue }) => {
-      try {
-          const token = localStorage.getItem('token');
-          const response = await axios.put(
-              'https://shoppyglobe-server.onrender.com/api/cart', 
-              { productId: id, quantity },
-              {
-                  headers: { 
-                      Authorization: `Bearer ${token}`,
-                      'Content-Type': 'application/json'
-                  }
-              }
-          );
-          return response.data.products;  // Assuming the response returns the updated cart
-      } catch (error) {
-          return rejectWithValue(error.response?.data?.message || 'Failed to update item quantity');
-      }
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.put(
+        'https://shoppyglobe-server.onrender.com/api/cart', 
+        { productId: id, quantity },
+        {
+            headers: { 
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        }
+      );
+      return response.data.products;  // Assuming the response returns the updated cart
+    } catch (error) {
+      // Show alert for the user
+      alert('Please log in to update cart items');
+      return rejectWithValue(error.response?.data?.message || 'Failed to update item quantity');
+    }
   }
 );
-
 
 // Remove item from cart (server & state)
 export const removeFromCartServer = createAsyncThunk(
@@ -78,6 +94,8 @@ export const removeFromCartServer = createAsyncThunk(
       });
       return id;
     } catch (error) {
+      // Show alert for the user
+      alert('Please log in to remove items from your cart');
       return rejectWithValue(error.response?.data?.message || 'Failed to remove item from cart');
     }
   }

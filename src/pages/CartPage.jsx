@@ -10,9 +10,16 @@ const CartPage = () => {
   const cartItems = useSelector((state) => state.cart.items || []);
   const [loading, setLoading] = useState(true);
   const [orderPlaced, setOrderPlaced] = useState(false);  // Track if the order is placed
+  const token = localStorage.getItem('token');  // Get the token from localStorage
 
   useEffect(() => {
     const loadCart = async () => {
+      if (!token) {
+        alert('Please log in to access your cart');
+        setLoading(false);  // Stop loading if not logged in
+        return;
+      }
+      if (token) {
       try {
         setLoading(true);
         await dispatch(fetchCart());
@@ -21,10 +28,15 @@ const CartPage = () => {
       } finally {
         setLoading(false);
       }
+    }
     };
-    loadCart();
-  }, [dispatch]);
-
+  
+    if (token) {
+      loadCart();
+    }
+  
+  }, [dispatch, token]);  // Run useEffect when token changes, and only dispatch if the token exists
+  
   const handleOrderPlacement = async () => {
     try {
       // Assuming you have an order placement function in your app, you could place the order here
