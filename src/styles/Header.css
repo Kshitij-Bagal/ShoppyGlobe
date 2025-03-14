@@ -190,3 +190,41 @@
     background: #0056b3;
   }
 }
+@media (max-width: 420px) {
+  .navbar {
+    flex-direction: row;
+    height: auto;
+    padding: 10px 0;
+    width: 100%;
+  }
+
+  .logo a {
+    font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+    margin-bottom: 10px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    position: static;
+    box-shadow: none;
+    background: #007bff;
+    border-radius: 0;
+    margin-top: 10px;
+  }
+
+  .nav-links a {
+    font-size: 0.95rem;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .dropdown-menu {
+    background: #0066cc;
+  }
+
+  .dropdown-menu li a {
+    font-size: 0.95rem;
+    padding: 12px;
+    text-align: center;
+  }
+}

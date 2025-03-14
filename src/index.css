@@ -12,6 +12,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.main-content{
+  width: 100%;
+  padding: 0%;
+}
 
 a {
   font-weight: 500;
@@ -63,4 +67,10 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+@media (max-width: 340px) {
+:root{
+display: none;
+}
 }

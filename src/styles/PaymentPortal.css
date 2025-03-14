@@ -16,7 +16,6 @@ h2, h3, h4 {
   display: flex;
   gap: 40px;
   margin: 20px auto;
-  padding: 20px;
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -69,6 +68,7 @@ h2, h3, h4 {
   gap: 15px;
   width:350px;
   max-width: 500px;
+  align-items: center
 }
 .payment-form #cvv{
   width: 100px;
@@ -154,20 +154,26 @@ button:active {
   }
 }
 
+.address-input{
+  display: flex;
+  flex-direction: column;
+}
+
 /* Responsive Design */
 @media (max-width: 992px) {
   .payment-portal {
-    flex-direction: column;
+    flex-direction: row;
     width: 90%;
-    padding: 15px;
   }
 
   .product-summary {
-    width: 100%;
+    width: 90%;
+    margin: 10px 10px;
   }
 
   .payment-form {
     width: 100%;
+    margin: 10px 20px 10px 10px;
   }
 
   .card-info {
@@ -178,7 +184,6 @@ button:active {
 @media (max-width: 768px) {
   .payment-portal {
     width: 95%;
-    padding: 15px;
   }
 
   .product-summary {
@@ -187,6 +192,7 @@ button:active {
 
   .payment-form {
     width: 100%;
+    padding: 0%;
   }
 
   .product-summary h4 {
@@ -205,18 +211,21 @@ button:active {
 
 @media (max-width: 576px) {
   .payment-portal {
-    width: 100%;
-    border-radius: 0;
-    padding: 10px;
-    box-shadow: none;
+    width: 95%;
+    flex-direction: column;
   }
 
   .product-summary {
-    width: 100%;
+    width: 85%;
   }
 
   .payment-form {
-    width: 100%;
+    width: 90%;
+    margin: 20px;
+  }  
+  
+  .payment-form  input{
+    width: 85%;
   }
 
   .product-summary h4 {
@@ -226,4 +235,15 @@ button:active {
   button {
     padding: 10px;
   }
+}
+@media (max-width: 360px) {
+
+  .product-summary {
+    width: 78%;
+  }
+
+  .payment-form {
+    margin: 15px;
+  }  
+  
 }

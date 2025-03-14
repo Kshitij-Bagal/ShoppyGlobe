@@ -21,7 +21,7 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
+    margin: 20px auto;
     max-width: 500px;
     width: 100%;
   }
@@ -34,11 +34,11 @@
   .add-product-form input,
   .add-product-form textarea,
   .add-product-form select {
-    width: 100%;
+    width: 80%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 15px;
     font-size: 16px;
   }
   
@@ -75,7 +75,8 @@
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-  }
+    margin: auto;  
+}
   
   .product-thumbnail {
     width: 100%;
@@ -97,7 +98,7 @@
     margin-top: 15px;
   }
   
-  .product-actions button {
+  .pro-list-btn button {
     margin: 5px;
     padding: 8px 15px;
     border: none;
@@ -107,34 +108,51 @@
     cursor: pointer;
   }
   
-  .product-actions button:hover {
+  .pro-list-btn button:hover {
     background-color: #0056b3;
   }
   
-  .product-actions button:disabled {
+  .pro-list-btn button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   }
   
-  /* Media Queries for Responsiveness */
   @media (max-width: 768px) {
-    .add-product-form {
-      max-width: 100%;
+    .product-list {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
     }
-  
-  }
-  
-  @media (max-width: 480px) {
-    .add-product-form {
-      padding: 15px;
-    }
-  
+    
     .product-card {
-      width: 100%;
+      width: 75%;
     }
-  
-    .product-thumbnail {
-      height: 150px;
+  }
+
+  @media (max-width: 480px) {
+    .admin-product {
+      padding: 10px;
+    }
+    
+    .add-product-form {
+      width: 80%;
+    }
+    
+    .add-product-form input,
+    .add-product-form textarea,
+    .add-product-form select {
+      font-size: 14px;
+      width: 80%;
+    }
+    
+    .add-product-form button {
+      padding: 10px 15px;
+      font-size: 14px;
+    }
+    
+    .pro-list-btn button {
+      padding: 6px 10px;
+      font-size: 14px;
     }
   }
   

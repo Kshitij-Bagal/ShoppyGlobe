@@ -1,6 +1,7 @@
 import { useState } from 'react'; 
 import PropTypes from 'prop-types';
 import useFetchProducts from '../hooks/useFetchProducts';
+import '../styles/FilterBar.css';
 
 const FilterBar = ({ onSearch, onCategoryChange, onSortChange, selectedCategory }) => {
   const { categories = [] } = useFetchProducts(); // Ensure categories is an empty array by default

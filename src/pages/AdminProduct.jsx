@@ -203,8 +203,9 @@ const AdminProduct = () => {
                   <p>Price: ${product.price}</p>
                   <p>Discount: {product.discountPercentage}%</p>
                   <p>Stock: {product.stock}</p>
+                  <div className="pro-list-btn">
                   <button onClick={() => handleEditProduct(product)}>Edit</button>
-                  <button onClick={() => handleDeleteProduct(product._id)}>Delete</button>
+                  <button onClick={() => handleDeleteProduct(product._id)}>Delete</button></div>
                 </>
               )}
             </div>

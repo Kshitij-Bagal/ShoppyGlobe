@@ -147,139 +147,167 @@ const PaymentPortal = () => {
 
   return (
     <>
-    <div className="payment-portal">
-      <div className="product-summary">
-        <h2>Demo Payment Portal</h2>
-        <h3>Order Summary</h3>
-        <ul>
-          {cart.map((item) => (
-            <li key={item._id}>
-              {item.title} x {item.quantity} - ${item.price * item.quantity}
-            </li>
-          ))}
-        </ul>
-        <h4>Total: ${total.toFixed(2)}</h4>
-      </div>
-
-      <form onSubmit={handlePayment} className="payment-form">
-        <h3>Payment Details</h3>
-
-        <label>Name on Card</label>
-        <input
-          type="text"
-          name="name"
-          placeholder="John Doe"
-          required
-          onChange={handleInputChange}
-          className={formErrors.name ? 'error' : ''}
-        />
-        {formErrors.name && <small className="error-message">Name is required</small>}
-
-        <label>Card Number</label>
-        <input
-          type="text"
-          name="cardNumber"
-          placeholder="1234567891011121"
-          maxLength="16"
-          required
-          onChange={handleInputChange}
-          className={formErrors.cardNumber ? 'error' : ''}
-          value={formData.cardNumber} 
-        />
-        {formErrors.cardNumber && <small className="error-message">Card number must be 16 digits</small>}
-
-        <div className="card-info">
-          <div>
-            <label>Expiry Date</label><br />
-            <input
-              type="text"
-              name="expiry"
-              placeholder="MM/YY"
-              maxLength="5"
-              required
-              onChange={handleInputChange}
-              className={formErrors.expiry ? 'error' : ''}
-              value={formData.expiry}
-            />
-            {formErrors.expiry && <small className="error-message">Invalid expiry format</small>}
-          </div>
-          <div>
-            <label>CVV</label><br />
-            <input
-              type="text"
-              id='cvv'
-              name="cvv"
-              placeholder="123"
-              maxLength="3"
-              required
-              onChange={handleInputChange}
-              className={formErrors.cvv ? 'error' : ''}
-              value={formData.cvv} 
-            />
-            {formErrors.cvv && <small className="error-message">CVV must be 3 digits</small>}
-          </div>
+      <div className="payment-portal">
+        <div className="product-summary">
+          <h2>Demo Payment Portal</h2>
+          <h3>Order Summary</h3>
+          <ul>
+            {cart.map((item) => (
+              <li key={item._id}>
+                {item.title} x {item.quantity} - ${item.price * item.quantity}
+              </li>
+            ))}
+          </ul>
+          <h4>Total: ${total.toFixed(2)}</h4>
         </div>
+
+        <form onSubmit={handlePayment} className="payment-form">
+          <h3>Payment Details</h3>
+
+          <label>Name on Card</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="John Doe"
+            required
+            onChange={handleInputChange}
+            className={formErrors.name ? "error" : ""}
+          />
+          {formErrors.name && (
+            <small className="error-message">Name is required</small>
+          )}
+
+          <label>Card Number</label>
+          <input
+            type="text"
+            name="cardNumber"
+            placeholder="1234567891011121"
+            maxLength="16"
+            required
+            onChange={handleInputChange}
+            className={formErrors.cardNumber ? "error" : ""}
+            value={formData.cardNumber}
+          />
+          {formErrors.cardNumber && (
+            <small className="error-message">
+              Card number must be 16 digits
+            </small>
+          )}
+
+          <div className="card-info">
+            <div>
+              <label>Expiry Date</label>
+              <br />
+              <input
+                type="text"
+                name="expiry"
+                placeholder="MM/YY"
+                maxLength="5"
+                required
+                onChange={handleInputChange}
+                className={formErrors.expiry ? "error" : ""}
+                value={formData.expiry}
+              />
+              {formErrors.expiry && (
+                <small className="error-message">Invalid expiry format</small>
+              )}
+            </div>
+            <div>
+              <label>CVV</label>
+              <br />
+              <input
+                type="text"
+                id="cvv"
+                name="cvv"
+                placeholder="123"
+                maxLength="3"
+                required
+                onChange={handleInputChange}
+                className={formErrors.cvv ? "error" : ""}
+                value={formData.cvv}
+              />
+              {formErrors.cvv && (
+                <small className="error-message">CVV must be 3 digits</small>
+              )}
+            </div>
+          </div>
           <div className="address">
-        <h3>Shipping Address</h3>
-        <label>Street</label>
-        <input
-          type="text"
-          name="street"
-          value={formData.street}
-          onChange={handleInputChange}
-          required
-          className={formErrors.street ? 'error' : ''}
-        />
-        {formErrors.street && <small className="error-message">Street is required</small>}
-
-        <label>City</label>
-        <input
-          type="text"
-          name="city"
-          value={formData.city}
-          onChange={handleInputChange}
-          required
-          className={formErrors.city ? 'error' : ''}
-        />
-        {formErrors.city && <small className="error-message">City is required</small>}
-
-        <label>State</label>
-        <input
-          type="text"
-          name="state"
-          value={formData.state}
-          onChange={handleInputChange}
-          required
-          className={formErrors.state ? 'error' : ''}
-        />
-        {formErrors.state && <small className="error-message">State is required</small>}
-
-        <label>Postal Code</label>
-        <input
-          type="text"
-          name="postalCode"
-          value={formData.postalCode}
-          onChange={handleInputChange}
-          required
-          className={formErrors.postalCode ? 'error' : ''}
-        />
-        {formErrors.postalCode && <small className="error-message">Postal code is required</small>}
-</div>
-        <button type="submit">Pay Now</button>
-      </form></div>
-      <div className='payment-status'>
-        {paymentStatus === 'success' && (
+            <h3>Shipping Address</h3>
+            <div className="address-input">
+              <label>Street</label>
+              <input
+                type="text"
+                name="street"
+                value={formData.street}
+                onChange={handleInputChange}
+                required
+                className={formErrors.street ? "error" : ""}
+              />
+              {formErrors.street && (
+                <small className="error-message">Street is required</small>
+              )}
+            </div>
+            <div className="address-input">
+              <label>City</label>
+              <input
+                type="text"
+                name="city"
+                value={formData.city}
+                onChange={handleInputChange}
+                required
+                className={formErrors.city ? "error" : ""}
+              />
+              {formErrors.city && (
+                <small className="error-message">City is required</small>
+              )}
+            </div>
+            <div className="address-input">
+              <label>State</label>
+              <input
+                type="text"
+                name="state"
+                value={formData.state}
+                onChange={handleInputChange}
+                required
+                className={formErrors.state ? "error" : ""}
+              />
+              {formErrors.state && (
+                <small className="error-message">State is required</small>
+              )}
+            </div>
+            <div className="address-input">
+              <label>Postal Code</label>
+              <input
+                type="text"
+                name="postalCode"
+                value={formData.postalCode}
+                onChange={handleInputChange}
+                required
+                className={formErrors.postalCode ? "error" : ""}
+              />
+              {formErrors.postalCode && (
+                <small className="error-message">Postal code is required</small>
+              )}
+            </div>
+          </div>
+          <button type="submit">Pay Now</button>
+        </form>
+      </div>
+      <div className="payment-status">
+        {paymentStatus === "success" && (
           <div className="success">
-           <p>. ✅ Payment Successful! Thank you for your purchase.</p>
+            <p>. ✅ Payment Successful! Thank you for your purchase.</p>
           </div>
         )}
-        {paymentStatus === 'failure' && (
+        {paymentStatus === "failure" && (
           <div className="failure">
-            <p>❌ Payment Failed! Please check your card details and try again.</p>
+            <p>
+              ❌ Payment Failed! Please check your card details and try again.
+            </p>
           </div>
         )}
-      
-    </div></>
+      </div>
+    </>
   );
 };
 

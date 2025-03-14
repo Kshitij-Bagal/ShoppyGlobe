@@ -69,7 +69,6 @@
 }
 
 .additional-details {
-  width: 100%;
   margin-top: 20px;
   background-color: #fff;
   border-radius: 15px;
@@ -86,6 +85,8 @@
   max-height: 500px; /* Set an appropriate height */
   opacity: 1;
   overflow: visible;
+  width: clamp(200px, 90%, 1000px);
+  margin: auto;
 }
 
 

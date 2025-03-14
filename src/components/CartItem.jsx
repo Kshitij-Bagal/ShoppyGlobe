@@ -58,7 +58,7 @@ const CartItem = ({ item }) => {
               >
                 -
               </button>
-              <span>{quantity}</span>
+              <span className=''>{quantity}</span>
               <button
                 onClick={() => handleQuantityChange(1)}
                 disabled={loading}

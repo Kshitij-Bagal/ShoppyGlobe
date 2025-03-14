@@ -9,6 +9,7 @@
   padding: 20px;
   background: linear-gradient(135deg, #f5f7fa, #ebeff5); /* Adding a subtle gradient */
   min-height: 100vh;
+  max-width: 1200px;
 }
 
 /* Styling the main heading */
