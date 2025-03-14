@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUserToken } from '../redux/userSlice'; 
 import '../styles/UserProfile.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -28,7 +28,6 @@ const Profile = () => {
 
   const dispatch = useDispatch();
   const token = localStorage.getItem('token'); 
-  const navigate = useNavigate(); // To handle redirection
 
   if (!token) {
     window.location.href = '/login'; 
@@ -66,6 +65,7 @@ const Profile = () => {
   
     fetchUser();
   }, [token, dispatch]);
+  
 
   const handleEditToggle = () => {
     setEditMode(!editMode);
@@ -129,9 +129,6 @@ const Profile = () => {
       setError(err.message);
     }
   };
-
-  // Check if all required fields are filled
-  const isFormValid = updatedData.firstName && updatedData.lastName && updatedData.email && updatedData.username && updatedData.age && updatedData.phone && updatedData.gender && updatedData.address.street && updatedData.address.city && updatedData.address.state && updatedData.address.postalCode && updatedData.address.country;
 
   if (loading) return <div className="loading-spinner">Loading...</div>;
   if (error) return <div className="error-message">Error: {error}</div>;
@@ -251,7 +248,7 @@ const Profile = () => {
               />
             </div>
             <br />
-            <button onClick={handleSave} disabled={!isFormValid}>Save</button>
+            <button onClick={handleSave}>Save</button>
             <button onClick={handleEditToggle}>Cancel</button>
           </>
         ) : (
